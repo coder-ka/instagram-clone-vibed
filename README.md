@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# インスタグラムクローンをclaude codeで作る試み
 
-## Getting Started
+[Next.jsのボイラープレート](https://vercel.com/templates/next.js/nextjs-boilerplate)から開始。
 
-First, run the development server:
+最初は、
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+claude init
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## プロンプト履歴
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- インスタグラムクローンを作るための仕様と開発計画をDEVELOPMENT.mdに書いて
+- 開発計画に従って、まずは段階2まで実装して 
+- Share Postを押すとエラーが出ます
+- emailとusernameを分けずに、emailをユーザー名として使って
+- 目のマークのアイコンを使ってパスワードが見られるようにして
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 結果
 
-## Learn More
+途中段階で断念。
 
-To learn more about Next.js, take a look at the following resources:
+以下、反省点・気付き
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 認証周りでエラーが起きて怖い。アカウント機能は大抵のアプリに必要なものなので、ボイラープレートに含めておくべき（実装例を示す意味でも）
+- DBを勝手にsqliteにしてDBファイルを`.gitignore`に入れてなかったり、ファイルの保存先を`public`フォルダ内にしたりしていた。
+  - 言えば直してくれると思うが、docker周りを利用して欲しい所
+  - きっちり指示しておくか、これもボイラープレートに含めておくべきかもしれない
+- セキュリティのベストプラクティスというより、世間で多い実装パターンが採用されてしまう
+  - 例えば、パスワード方式は古くてメールアドレス認証が望ましいが、そうなっていない
+- 実装難易度を「考慮量の多さ」と「独自度の高さ」に分けるなら、前者は得意で後者は苦手
+  - 例えば、「マルチアカウントの切り替えに対応して」は簡単
+  - 語彙の問題で、語彙の多さは問題無いが、存在しない語彙の意味の推測は精度が下がる
+- 思ってるより細かく指定する必要がある
+  - できれば使用する技術や、実装方針まで書けると良い
+  - 細かく書くほど精度が上がる
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+以下、次への課題
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 認証/DB/ファイル/メールなどのWebアプリの頻発パターンだけでもボイラープレートに入れておけると良い。
+  - 独自のボイラープレートを磨くことがAIの新規プロジェクト向けの資産になるかもしれない。
+- 再現性の高いプロンプトが必要になってくる。これも資産になる。
